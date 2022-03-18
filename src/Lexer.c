@@ -8,7 +8,7 @@ void lexer_init(lexer_t* lexer, char* buffer) {
     lexer->buffer = buffer;
     lexer->curChar = '\0';
     lexer->lineNum = 1;
-    lexer->error = true;
+    lexer->flags = 0x0;
 }
 
 
@@ -33,7 +33,7 @@ void tokenize(lexer_t* lexer) {
         if (lexer->curChar == '\n') {
             if (!(curlineEnd)) {            // Make sure there was a semicolon, if not raise an error.
                 raise("Missing semicolon.", lexer->lineNum);
-                lexer->error = true;
+                lexer->flags | LFLAG_ERROR;
                 break;
             }
 
@@ -45,8 +45,18 @@ void tokenize(lexer_t* lexer) {
         switch (lexer->curChar) {
             case ';':
                 curlineEnd = true;
-                flushbuffer(lexbuf);        // Flush buffer because this is the end of the line.
+            case ' ':
+                // Check if we aren't ignoring whitespace.
+                if (!(lexer->flags & LFLAG_IGNORE_WHITESPACE)) {
+                    // Begin checking the buffer.
+                    if (strcmp(lexbuf, "puts")) {
+                        // TODO: Add to tokenlist.
+                    }
+                }
+
+                flushbuffer(lexbuf);
                 break;
+
         }
 
         ++lbufidx;                                      // Increment index after done using current char.
