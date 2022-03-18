@@ -18,6 +18,30 @@ static void flushbuffer(char* buffer) {
 }
 
 
+static char* fetch_str(lexer_t* lexer) {
+    char* strbuf = (char*)calloc(2, sizeof(char));
+    unsigned long long strbufidx = 0;
+
+    while (lexer->idx < lexer->bufsize) {
+        ++lexer->idx;
+        lexer->curChar = lexer->buffer[lexer->idx];
+        
+        if (lexer->curChar == '"') {
+            return strbuf;
+        } else if (lexer->curChar == '\n') {
+            raise("Unterminated string.", lexer->lineNum);
+            lexer->flags |= LFLAG_ERROR;
+            free(strbuf);
+            return NULL;
+        }
+
+        strbuf[strbufidx] = lexer->curChar;
+        ++strbufidx;
+        strbuf = realloc(strbuf, sizeof(char) * (strbufidx + 1));
+    }
+}
+
+
 void tokenize(lexer_t* lexer) {
     char* lexbuf = calloc(2, sizeof(char));     // Buffer for holding chars until we are ready to compare.
     unsigned long lbufidx = 0;
@@ -33,7 +57,7 @@ void tokenize(lexer_t* lexer) {
         if (lexer->curChar == '\n') {
             if (!(curlineEnd)) {            // Make sure there was a semicolon, if not raise an error.
                 raise("Missing semicolon.", lexer->lineNum);
-                lexer->flags | LFLAG_ERROR;
+                lexer->flags |= LFLAG_ERROR;
                 break;
             }
 
@@ -50,7 +74,7 @@ void tokenize(lexer_t* lexer) {
                 if (!(lexer->flags & LFLAG_IGNORE_WHITESPACE)) {
                     // Begin checking the buffer.
                     if (strcmp(lexbuf, "puts")) {
-                        // TODO: Add to tokenlist.
+                        tokenlist_push(&lexer->tokenlist, create_token("puts", T_PUTS, false));
                     }
                 }
 
