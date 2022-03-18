@@ -48,6 +48,12 @@ int main(int argc, char* argv[]) {
 
     lexer_t lexer;
     lexer_init(&lexer, buffer);
+    tokenlist_init(&lexer.tokenlist);
+
+    tokenize(&lexer);
+
+    // Destroy tokenlist.
+    tokenlist_destroy(&lexer.tokenlist);
 
     // Free buffer.
     free(buffer);
