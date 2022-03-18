@@ -44,7 +44,7 @@ void parse(parser_t* parser) {
 
         switch (parser->currentToken.type) {
             case T_PUTS:
-                ast_push_node(&parser->ast, ast_create_node("PUTS", peek(parser, 2).tok));
+                ast_push_node(&parser->ast, ast_create_node("STDOUT_WRITE", peek(parser, 2).tok));
         }
 
         ++parser->idx;
