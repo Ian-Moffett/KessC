@@ -24,8 +24,8 @@ typedef struct {
 
 void ast_init(ast_t* ast);
 void ast_push_node(ast_t* ast, ast_node_t node);
-ast_node_t ast_create_node(const char* typelabel, const char* token);
-ast_node_t ast_create_nodeint(const char* typelabel, uint64_t token);
+ast_node_t ast_create_node(char* typelabel, char* str);
+ast_node_t ast_create_nodeint(char* typelabel, uint64_t dec);
 void ast_destroy(ast_t ast);
 
 #endif
