@@ -2,11 +2,12 @@
 #define LEXER_H
 
 #include <string.h>
-#include <include/Token.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <include/Token.h>
+#include <include/Debugger.h>
 
 // Основная структура лексера.
 typedef struct {
