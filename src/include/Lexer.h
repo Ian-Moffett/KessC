@@ -10,6 +10,8 @@
 #include <include/Token.h>
 #include <include/Debugger.h>
 
+#define LFLAG_IGNORE_WHITESPACE 1
+
 // Основная структура лексера.
 typedef struct {
 	size_t idx;
@@ -19,6 +21,7 @@ typedef struct {
     char curChar;
     tokenlist_t tokenlist;
     bool error;
+    uint8_t flags;
 } lexer_t;
 
 
