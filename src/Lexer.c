@@ -45,6 +45,13 @@ static char* fetch_str(lexer_t* lexer) {
 }
 
 
+static void review_buffer(lexer_t* lexer, const char* const buffer) {
+    if (strcmp(buffer, "puts") == 0) {        
+        tokenlist_push(&lexer->tokenlist, create_token("puts", T_PUTS, false));
+    }
+}
+
+
 void tokenize(lexer_t* lexer) {
     char* lexbuf = calloc(2, sizeof(char));     // Buffer for holding chars until we are ready to compare.
     unsigned long lbufidx = 0;
@@ -76,18 +83,14 @@ void tokenize(lexer_t* lexer) {
             case ' ':
                 // Check if we aren't ignoring whitespace.
                 if (!(lexer->flags & LFLAG_IGNORE_WHITESPACE)) {
-                    // Begin checking the buffer.
-                    if (strcmp(lexbuf, "puts")) {
-                        tokenlist_push(&lexer->tokenlist, create_token("puts", T_PUTS, false));
-                    }
-                } else {
-                    // Toggle off (1 << 1) bit.
-                    lexer->flags ^= LFLAG_IGNORE_WHITESPACE;
+                    review_buffer(lexer, lexbuf);
                 }
 
                 flushbuffer(&lexbuf);
+                
                 break;
             case '(':
+                review_buffer(lexer, lexbuf);
                 tokenlist_push(&lexer->tokenlist, create_token("(", T_LPAREN, false));
                 flushbuffer(&lexbuf);
                 break;
@@ -101,6 +104,7 @@ void tokenize(lexer_t* lexer) {
         }
 
         ++lbufidx;                                      // Increment index after done using current char.
+        lexbuf[lexer->idx] = lexer->curChar;
         lexbuf = realloc(lexbuf, sizeof(char) * lbufidx + 1);       // Realloc the buffer somewhere else in memory.
         ++lexer->idx;                                               // Increment buffer index.
     }
