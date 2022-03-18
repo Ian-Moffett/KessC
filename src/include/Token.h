@@ -29,6 +29,7 @@ typedef struct {
 
 void tokenlist_destroy(tokenlist_t* tokenlist);
 void tokenlist_push(tokenlist_t* tokenlist, token_t token);
+void tokenlist_init(tokenlist_t* tokenlist);
 token_t create_token(char* tok, tokentype_t type, bool heapAlloc); 
 
 #endif
