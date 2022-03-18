@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stddef.h>
 #include <include/Lexer.h>
+#include <include/Parser.h>
+#include <include/AST.h>
 
 
 // TODO: Allow multiple files to be compiled.
@@ -47,14 +49,21 @@ int main(int argc, char* argv[]) {
      *  it up with lexer_init.
      */
 
+    // Struct instances.
     lexer_t lexer;
+    parser_t parser;
+
     lexer_init(&lexer, buffer);
     tokenlist_init(&lexer.tokenlist);
 
     tokenize(&lexer);
 
+    parser_init(&parser, lexer.tokenlist);
+    parse(&parser);
+
     // Destroy tokenlist.
     tokenlist_destroy(&lexer.tokenlist);
+    ast_destroy(parser.ast);
 
     // Free buffer.
     free(buffer);
