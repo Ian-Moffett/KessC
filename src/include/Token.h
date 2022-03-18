@@ -11,6 +11,8 @@ typedef enum {
     T_PUTS,
     T_STR,
     T_DEC,
+    T_LPAREN,
+    T_RPAREN
 } tokentype_t;
 
 
