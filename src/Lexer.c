@@ -29,7 +29,9 @@ static char* fetch_str(lexer_t* lexer) {
         
         if (lexer->curChar == '"') {
             return strbuf;
-        } else if (lexer->curChar == '\n') {
+        } 
+
+        if (lexer->curChar == '\n') {
             raise("Unterminated string.", lexer->lineNum);
             lexer->flags |= LFLAG_ERROR;
             free(strbuf);
