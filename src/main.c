@@ -6,6 +6,7 @@
 #include <include/Lexer.h>
 #include <include/Parser.h>
 #include <include/AST.h>
+#include <include/CodeGen.h>
 
 
 // TODO: Allow multiple files to be compiled.
@@ -60,6 +61,8 @@ int main(int argc, char* argv[]) {
 
     parser_init(&parser, lexer.tokenlist);
     parse(&parser);
+
+    compile(&parser.ast);
 
     // Destroy tokenlist.
     tokenlist_destroy(&lexer.tokenlist);

@@ -23,6 +23,11 @@ void parser_init(parser_t* parser, tokenlist_t tokenlist) {
 }
 
 
+static token_t peek(parser_t* parser, uint16_t offset) {
+    return parser->tokenlist.tokens[parser->idx + offset];
+}
+
+
 void parse(parser_t* parser) { 
     ast_t ast = {
         .nodes = malloc(sizeof(ast_node_t)),
@@ -36,6 +41,11 @@ void parse(parser_t* parser) {
         #ifdef PARSER_DUMP_TOKENS
         parser->currentToken.type < TOKEN_COUNT ? printf("%s\n", tokens[parser->currentToken.type]) : printf("");
         #endif
+
+        switch (parser->currentToken.type) {
+            case T_PUTS:
+                ast_push_node(&parser->ast, ast_create_node("PUTS", peek(parser, 2).tok));
+        }
 
         ++parser->idx;
     }
