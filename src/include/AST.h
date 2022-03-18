@@ -12,7 +12,7 @@ typedef struct {
     union {
         char* token;
         uint64_t tokenInt;
-    } token;
+    } value;
 } ast_node_t;
 
 
