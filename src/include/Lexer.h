@@ -10,11 +10,12 @@ typedef struct {
     size_t bufsize;
     char*  buffer;
     char curChar;
+    tokenlist_t tokenlist;
 } lexer_t;
 
 
 void lexer_init(lexer_t* lexer, char* buffer);
-void tokenize(tokenlist_t* tokenlist, lexer_t* lexer);
+void tokenize(lexer_t* lexer);
 
 
 #endif
