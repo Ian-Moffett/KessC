@@ -8,7 +8,7 @@
 
 
 typedef enum {
-    T_PRINT,
+    T_PUTS,
     T_STR,
     T_DEC,
 } tokentype_t;
