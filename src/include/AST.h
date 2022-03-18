@@ -3,15 +3,16 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 
 typedef struct {
     const char* type;
 
-    union token_value {
+    union {
         char* token;
         uint64_t tokenInt;
-    };
+    } tokentype;
 } ast_node_t;
 
 
@@ -25,6 +26,6 @@ void ast_init(ast_t* ast);
 void ast_push_node(ast_t* ast, ast_node_t node);
 void ast_create_node(const char* typelabel, const char* token);
 void ast_create_nodeint(const char* typelabel, uint64_t token);
-
+void ast_destroy(ast_t ast);
 
 #endif
