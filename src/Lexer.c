@@ -11,11 +11,16 @@ void lexer_init(lexer_t* lexer, char* buffer) {
 }
 
 
-void tokenize(tokenlist_t* tokenlist, lexer_t* lexer) {
-    char* lexbuf = calloc(lexer->bufsize + 1, sizeof(char));
+void tokenize(lexer_t* lexer) {
+    char* lexbuf = calloc(2, sizeof(char));
+    unsigned long lbufidx = 0;
 
-    while (lexer->idx < lexer->bufsize) {
+    while (lexer->idx++ < lexer->bufsize) {
         lexer->curChar = lexer->buffer[lexer->idx];
+
+        ++lbufidx;
+
+        lexbuf = realloc(lexbuf, sizeof(char) * lbufidx + 1);
         ++lexer->idx;
     }
 
