@@ -15,7 +15,7 @@ typedef struct {
 	size_t idx;
     size_t bufsize;
     uint64_t lineNum;
-    char*  buffer;
+    char* buffer;
     char curChar;
     tokenlist_t tokenlist;
 } lexer_t;
