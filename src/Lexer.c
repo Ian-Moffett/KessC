@@ -42,9 +42,11 @@ void tokenize(lexer_t* lexer) {
             ++lexer->lineNum;           // Newline = increment line num.
         }
 
-        if (lexer->curChar == ';') {
-            curlineEnd = true;
-            flushbuffer(lexbuf);        // Flush buffer because this is the end of the line.
+        switch (lexer->curChar) {
+            case ';':
+                curlineEnd = true;
+                flushbuffer(lexbuf);        // Flush buffer because this is the end of the line.
+                break;
         }
 
         ++lbufidx;                                      // Increment index after done using current char.
