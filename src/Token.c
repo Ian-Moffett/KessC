@@ -2,14 +2,17 @@
 
 
 void tokenlist_destroy(tokenlist_t* tokenlist) {
+    // Iterate through all tokens.
     for (int i = 0; i < tokenlist->idx + 1; ++i) {
+        // Check if token str is allocated on heap.
         if (tokenlist->tokens[i].heapAlloc) {
-            free(tokenlist->tokens[i].tok);
+            // If so, free that token.
+            free(tokenlist->tokens[i].tok); 
         }
     }
 
-    free(tokenlist->tokens);
-    tokenlist->tokens = NULL;
+    free(tokenlist->tokens);    // Now free the token list.
+    tokenlist->tokens = NULL;   // Also set it to NULL.
 }
 
 
