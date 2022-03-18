@@ -10,8 +10,8 @@ typedef struct {
     const char* type;
 
     union {
-        char* token;
-        uint64_t tokenInt;
+        char* str;
+        uint64_t dec;
     } value;
 } ast_node_t;
 
