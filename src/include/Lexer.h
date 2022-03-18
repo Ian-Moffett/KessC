@@ -12,6 +12,8 @@
 
 #define LFLAG_IGNORE_WHITESPACE 1
 #define LFLAG_ERROR (1 << 1)
+#define LFLAG_IGNORE_QUOTE (1 << 2)
+#define LFLAG_SEMI (1 << 3)
 
 
 // Основная структура лексера.
