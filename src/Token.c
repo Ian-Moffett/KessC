@@ -31,3 +31,10 @@ token_t create_token(char* tok, tokentype_t type, bool heapAlloc) {
 
     return token;
 }
+
+
+
+void tokenlist_init(tokenlist_t* tokenlist) {
+    tokenlist->tokens = malloc(sizeof(token_t));
+    tokenlist->idx = 0;
+}
