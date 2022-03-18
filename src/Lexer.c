@@ -13,8 +13,9 @@ void lexer_init(lexer_t* lexer, char* buffer) {
 
 
 // This function will flush any buffer you pass to it by nulling it out.
-static void flushbuffer(char* buffer) {
-    memset(buffer, '\0', strlen(buffer));
+static void flushbuffer(char** buffer) {
+    memset(*buffer, '\0', strlen(*buffer));
+    *buffer = realloc(*buffer, sizeof(char) + 1);
 }
 
 
@@ -62,7 +63,7 @@ void tokenize(lexer_t* lexer) {
             }
 
             curlineEnd = false;
-            flushbuffer(lexbuf);        // Flush the buffer to prevent newline inside.
+            flushbuffer(&lexbuf);        // Flush the buffer to prevent newline inside.
             ++lexer->lineNum;           // Newline = increment line num.
         }
 
@@ -78,9 +79,19 @@ void tokenize(lexer_t* lexer) {
                     }
                 }
 
-                flushbuffer(lexbuf);
+                flushbuffer(&lexbuf);
                 break;
-
+            case '(':
+                tokenlist_push(&lexer->tokenlist, create_token("(", T_LPAREN, false));
+                flushbuffer(&lexbuf);
+                break;
+            case ')':
+                tokenlist_push(&lexer->tokenlist, create_token(")", T_RPAREN, false));
+                break;
+            case '"':
+                char* str = fetch_str(lexer);
+                tokenlist_push(&lexer->tokenlist, create_token(str, T_STR, true));
+                break;
         }
 
         ++lbufidx;                                      // Increment index after done using current char.
