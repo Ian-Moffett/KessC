@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <include/Token.h>
 #include <include/Debugger.h>
 
@@ -13,6 +14,7 @@
 typedef struct {
 	size_t idx;
     size_t bufsize;
+    uint64_t lineNum;
     char*  buffer;
     char curChar;
     tokenlist_t tokenlist;
