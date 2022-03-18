@@ -2,7 +2,9 @@
 #define TOKEN_H
 
 #include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 
 typedef enum {
@@ -19,16 +21,14 @@ typedef struct {
 } token_t;
 
 
-// Tokenlist which is basically a linked list.
-typedef struct TokenList {
-    struct TokenList* next;
-    token_t token;
+typedef struct {
+    token_t* tokens;
+    size_t idx;
 } tokenlist_t;
 
 
-void tokenlist_destroy(tokenlist_t* masterNode);
-void tokenlist_add_node(token_t token);
-token_t tokenlist_mknode(tokentype_t type, char* token, bool heapAlloc);
-
+void tokenlist_destroy(tokenlist_t* tokenlist);
+void tokenlist_push(tokenlist_t* tokenlist, token_t token);
+token_t create_token(char* tok, tokentype_t type, bool heapAlloc); 
 
 #endif
