@@ -70,6 +70,7 @@ void tokenize(lexer_t* lexer) {
         switch (lexer->curChar) {
             case ';':
                 curlineEnd = true;
+                lexer->flags |= LFLAG_IGNORE_WHITESPACE;
             case ' ':
                 // Check if we aren't ignoring whitespace.
                 if (!(lexer->flags & LFLAG_IGNORE_WHITESPACE)) {
@@ -77,6 +78,9 @@ void tokenize(lexer_t* lexer) {
                     if (strcmp(lexbuf, "puts")) {
                         tokenlist_push(&lexer->tokenlist, create_token("puts", T_PUTS, false));
                     }
+                } else {
+                    // Toggle off (1 << 1) bit.
+                    lexer->flags ^= LFLAG_IGNORE_WHITESPACE;
                 }
 
                 flushbuffer(&lexbuf);
