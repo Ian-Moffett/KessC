@@ -18,6 +18,7 @@ typedef struct {
     char* buffer;
     char curChar;
     tokenlist_t tokenlist;
+    bool error;
 } lexer_t;
 
 
