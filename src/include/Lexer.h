@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 
+// Основная структура лексера.
 typedef struct {
 	size_t idx;
     size_t bufsize;
