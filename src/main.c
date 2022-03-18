@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
 
     // Allocate memory on heap since heap is bigger then stack.
     char* buffer = calloc(fsize + 1, sizeof(char));
+    fread(buffer, sizeof(char), fsize, fp);
 
     /*
      *  First we will need to create an instance
