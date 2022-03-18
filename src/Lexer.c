@@ -29,8 +29,9 @@ void tokenize(lexer_t* lexer) {
     while (lexer->idx < lexer->bufsize) {
         lexer->curChar = lexer->buffer[lexer->idx];     // Set the current char.
 
+        // Check if newline.
         if (lexer->curChar == '\n') {
-            if (!(curlineEnd)) {
+            if (!(curlineEnd)) {            // Make sure there was a semicolon, if not raise an error.
                 raise("Missing semicolon.", lexer->lineNum);
                 lexer->error = true;
                 break;
