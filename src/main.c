@@ -59,6 +59,19 @@ int main(int argc, char* argv[]) {
 
     tokenize(&lexer);
 
+    if (lexer.flags & LFLAG_ERROR) { 
+        exit(1);
+        // Destroy tokenlist.
+        tokenlist_destroy(&lexer.tokenlist);
+
+        // Free buffer.
+        free(buffer);
+
+        // Close file.
+        fclose(fp);
+        exit(1);
+    }
+
     parser_init(&parser, lexer.tokenlist);
     parse(&parser);
 

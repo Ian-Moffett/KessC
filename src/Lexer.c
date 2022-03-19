@@ -42,6 +42,14 @@ static char* fetch_str(lexer_t* lexer) {
 static void review_buffer(lexer_t* lexer, const char* const BUFFER) {
     if (strcmp(BUFFER, "puts") == 0) {        
         tokenlist_push(&lexer->tokenlist, create_token("puts", T_PUTS, false));
+    } else {
+
+        for (int i = 0; i < strlen(BUFFER); ++i) {
+            if (BUFFER[i] != ' ' && BUFFER[i] != '\t') {
+                raise("Unexpected token!", lexer->lineNum);
+                lexer->flags |= LFLAG_ERROR;
+            }
+        }
     }
 }
 
